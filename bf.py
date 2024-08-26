@@ -10,34 +10,35 @@ def run(chars):
     global mem, memPnt
     codePnt = 0
     while codePnt < len(chars):
-        if chars[codePnt] == '>':
-            if memPnt < len(chars):
-                memPnt += 1
-            else:
-                lg.warning('Out of bounds')
-        elif chars[codePnt] == '<':
-            if memPnt > 0:
-                memPnt -= 1
-            else:
-                lg.warning('Out of bounds')
-        elif chars[codePnt] == '+':
-            mem[memPnt] += 1
-        elif chars[codePnt] == '-':
-            mem[memPnt] -= 1
-        elif chars[codePnt] == '.':
-            print(chr(mem[memPnt]), end='')
-        elif chars[codePnt] == ',':
-            mem[memPnt] = ord(input()[0])
-        elif chars[codePnt] == '[':
-            while mem[memPnt] == 0:
-                codePnt += 1
-                if chars[codePnt] == ']':
-                    break
-        elif chars[codePnt] == ']':
-            while mem[memPnt] != 0:
-                codePnt -= 1
-                if chars[codePnt] == '[':
-                    break
+        match chars[codePnt]:
+            case '>':
+                if memPnt < len(chars):
+                    memPnt += 1
+                else:
+                    lg.warning('Out of bounds')
+            case '<':
+                if memPnt > 0:
+                    memPnt -= 1
+                else:
+                    lg.warning('Out of bounds')
+            case '+':
+                mem[memPnt] += 1
+            case '-':
+                mem[memPnt] -= 1
+            case'.':
+                print(chr(mem[memPnt]), end='')
+            case',':
+                mem[memPnt] = ord(input()[0])
+            case'[':
+                while mem[memPnt] == 0:
+                    codePnt += 1
+                    if chars[codePnt] == ']':
+                        break
+            case']':
+                while mem[memPnt] != 0:
+                    codePnt -= 1
+                    if chars[codePnt] == '[':
+                        break
         codePnt += 1
 
 
@@ -81,16 +82,16 @@ elif len(sys.argv) < 2:
         if ip[:7] == 'chkmem ':
             print(mem[int(ip[7:])])
             continue
-        if ip[:9] == 'chkptdmem':
+        if ip == 'chkptdmem':
             print(mem[memPnt])
             continue
-        if ip[:8] == 'resetmem':
+        if ip == 'resetmem':
             mem = [0] * mem_len
             continue
-        if ip[:8] == 'resetptr':
+        if ip == 'resetptr':
             memPnt = 0
             continue
-        if ip[:8] == 'resetall':
+        if ip == 'resetall':
             mem = [0] * mem_len
             memPnt = 0
             continue
